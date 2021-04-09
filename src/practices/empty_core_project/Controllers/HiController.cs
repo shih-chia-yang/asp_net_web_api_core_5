@@ -16,5 +16,11 @@ namespace empty_core_project.Controllers
             var viewModel = new Hi();
             return View(viewModel);
         }
+
+        [HTTPPost]
+        public IActionResult test()
+        {
+            return View();
+        }
     }
 }
