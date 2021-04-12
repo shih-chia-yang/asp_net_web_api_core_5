@@ -33,6 +33,9 @@ namespace todo.infrastructure.Repositories
             return await _context.TodoItems.ToListAsync();
         }
 
-        
+        public void Update(TodoItem item)
+        {
+            _context.Entry(item).State=EntityState.Modified;
+        }
     }
 }

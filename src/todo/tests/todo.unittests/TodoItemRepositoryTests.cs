@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Linq;
 using todo.domain.Models;
 using todo.infrastructure.Repositories;
@@ -56,7 +57,7 @@ namespace tests.todo.unittests
         }
 
         [Fact]
-        public void Test_TodoItemsRepo_AddNew_Then_Should_Be_increasement()
+        public void Test_TodoItemsRepo_AddNew_Then_Should_Be_Increase()
         {
             //Given
             var newTodoItem = TodoItem.Create(4,"test-1","AddNew");
@@ -69,6 +70,21 @@ namespace tests.todo.unittests
             Assert.Equal(newTodoItem.Id, added.Id);
             Assert.Equal(newTodoItem.Name,added.Name);
             Assert.Equal(newTodoItem.Event, added.Event);
+        }
+
+        [Fact]
+        public void Test_TodoItemsRepo_Updated_Should_be_Modified()
+        {
+            //Given
+            ITodoRepository repo = new TodoRepository(_inMemory.Context);
+            var selected = repo.FindByIdAsync(1).Result;
+            selected.Event = $"updated at {DateTime.Now}";
+            //When
+            repo.Update(selected);
+            _inMemory.Context.SaveChangesAsync();
+            //Then
+            var filter = repo.FindByIdAsync(1).Result;
+            Assert.Equal(selected.Event, filter.Event);
         }
     }
 }

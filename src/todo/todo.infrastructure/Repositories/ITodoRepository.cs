@@ -11,5 +11,7 @@ namespace todo.infrastructure.Repositories
         Task<TodoItem> FindByIdAsync(int id);
 
         TodoItem Add(TodoItem item);
+
+        void Update(TodoItem item);
     }
 }
