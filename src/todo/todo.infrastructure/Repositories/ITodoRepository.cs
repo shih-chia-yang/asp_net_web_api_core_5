@@ -9,5 +9,7 @@ namespace todo.infrastructure.Repositories
         Task<IEnumerable<TodoItem>> GetAll();
 
         Task<TodoItem> FindByIdAsync(int id);
+
+        TodoItem Add(TodoItem item);
     }
 }

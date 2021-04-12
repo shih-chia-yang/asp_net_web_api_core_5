@@ -17,6 +17,11 @@ namespace todo.infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public TodoItem Add(TodoItem item)
+        {
+            return _context.TodoItems.Add(item).Entity;
+        }
+
         public Task<TodoItem> FindByIdAsync(int id)
         {
             var selected = _context.TodoItems.Where(x => x.Id == id).FirstOrDefaultAsync();
