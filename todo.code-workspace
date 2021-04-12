@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "todo.mvc",
+      "path": "~/project/asp_net_api_core_5/src/todo/todo.mvc/"
+    },
+    {
+      "name":"todo.domain",
+      "path": "~/project/asp_net_api_core_5/src/todo/todo.domain/"
+    },
+    {
+      "name":"todo.infrastructure",
+      "path": "~/project/asp_net_api_core_5/src/todo/todo.infrastructure/"
+    },
+    {
+      "name":"test",
+      "path":"~/project/asp_net_api_core_5/src/todo/tests/todo.unittests/"
+    }
+  ],
+  "settings": {}
+}
