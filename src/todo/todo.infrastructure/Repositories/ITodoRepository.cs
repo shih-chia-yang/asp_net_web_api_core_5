@@ -13,5 +13,7 @@ namespace todo.infrastructure.Repositories
         TodoItem Add(TodoItem item);
 
         void Update(TodoItem item);
+
+        void Delete(TodoItem item);
     }
 }

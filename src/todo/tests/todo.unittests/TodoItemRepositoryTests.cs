@@ -86,5 +86,20 @@ namespace tests.todo.unittests
             var filter = repo.FindByIdAsync(1).Result;
             Assert.Equal(selected.Event, filter.Event);
         }
+
+        [Fact]
+        public void Test_If_TodoItemRepo_Delete_Should_Be_Not_Found()
+        {
+            //Given
+            int deleteId = 2;
+            ITodoRepository repo = new TodoRepository(_inMemory.Context);
+            var deleted=repo.FindByIdAsync(deleteId).Result;
+            //When
+            repo.Delete(deleted);
+            _inMemory.Context.SaveChangesAsync();
+            //Then
+            var filter = repo.FindByIdAsync(deleteId).Result;
+            Assert.Null(filter);
+        }
     }
 }

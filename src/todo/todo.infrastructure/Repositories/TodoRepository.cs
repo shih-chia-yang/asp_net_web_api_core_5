@@ -22,6 +22,11 @@ namespace todo.infrastructure.Repositories
             return _context.TodoItems.Add(item).Entity;
         }
 
+        public void Delete(TodoItem item)
+        {
+            _context.TodoItems.Remove(item);
+        }
+
         public Task<TodoItem> FindByIdAsync(int id)
         {
             var selected = _context.TodoItems.Where(x => x.Id == id).FirstOrDefaultAsync();
