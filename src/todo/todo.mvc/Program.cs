@@ -20,7 +20,7 @@ namespace todo.mvc
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<TodoContext>();
                 TodoContextSeed seed =new TodoContextSeed();
-                seed.SeedAsync(context);
+                seed.SeedAsync(context).GetAwaiter();
             }
             host.Run();
         }

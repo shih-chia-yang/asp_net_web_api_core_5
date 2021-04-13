@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using todo.infrastructure;
 using todo.infrastructure.Repositories;
+using todo.domain.Models;
 
 namespace todo.mvc.Controllers
 {
@@ -12,31 +14,43 @@ namespace todo.mvc.Controllers
     {
         private ITodoRepository _iTodoRepository;
 
-        public TodoController(ITodoRepository iTodoRepository)
+        private TodoContext _context;
+
+        public TodoController(ITodoRepository iTodoRepository,TodoContext context)
         {
             _iTodoRepository = iTodoRepository;
+            _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var todoModel= await _iTodoRepository.GetAll();
+            return View(todoModel);
         }
 
-        public IActionResult Detail(int id)
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            var todo =await _iTodoRepository.FindByIdAsync(id);
+            return View(todo);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // [Post]
-        // [ValidateAntiForgeryToken]
-        public IActionResult Create(IFormCollection collection)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([FromForm]IFormCollection collection)
         {
             try
             {
+                var item =new TodoItem();
+                item.Name=collection["Name"];
+                item.Event=collection["Event"];
+                _iTodoRepository.Add(item);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -45,17 +59,24 @@ namespace todo.mvc.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var todo =await _iTodoRepository.FindByIdAsync(id);
+            return View(todo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [FromBody]IFormCollection collection)
+        public async Task<IActionResult> Edit(int id,[FromForm]IFormCollection collection)
         {
             try
             {
+                var todo =await _iTodoRepository.FindByIdAsync(id);
+                todo.Name=collection["Name"];
+                todo.Event=collection["Event"];
+                _iTodoRepository.Update(todo);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -63,18 +84,22 @@ namespace todo.mvc.Controllers
                 return View(ex.Message);
             }
         }
-
-        public IActionResult Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var todo =await _iTodoRepository.FindByIdAsync(id);
+            return View(todo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, [FromForm]IFormCollection collection)
         {
             try
             {
+                var todo =await _iTodoRepository.FindByIdAsync(id);
+                _iTodoRepository.Delete(todo);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)

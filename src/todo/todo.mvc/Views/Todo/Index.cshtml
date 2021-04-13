@@ -1,0 +1,35 @@
+
+@using todo.domain.Models
+@using System.Linq
+@model IEnumerable<TodoItem>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index1</h1>
+<p><a asp-action="Create">Create New</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Event</th>
+            <th>function</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Event</td>
+                <td>
+                    @Html.ActionLink("Edit","Edit",new{id=item.Id}) |
+                    @Html.ActionLink("Detail","Detail",new{id=item.Id}) |
+                    @Html.ActionLink("Delete","Delete",new{id=item.Id})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
