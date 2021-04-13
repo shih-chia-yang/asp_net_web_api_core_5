@@ -34,3 +34,21 @@ cd todo.mvc
 
 dotnet add reference ../todo.domain/todo.domain.csproj
 ```
+
+6. 增todo model
+
+7. todo.infrastructure 新增IRepository與Repository
+
+8. todo.infrastructure 使用orm設定資料庫，新增EntityTypeConfiguration設定todo 資料庫欄位
+
+9. todo.infrastructure 新增context 與seed
+
+10. 新增xunit專案 todo.unittests，測試context與repository的CRUD
+
+11. todo.mvc 設定AddDbContext 與DI Repository
+    1. 安裝Microsoft.EntityFrameworkCore.InMemory
+    2. 安裝Microsoft.EntityFrameworkCore.SqlServer
+    3. 在statup.cs新增AddDbContext 與 設定IServiceCollection
+    4. 在program.cs使用ServiceProvider ，將context載入seed資料初始化
+    5. todoController加入ITodoRepository ，建構子新增參數
+    6. 測試是否可執行
