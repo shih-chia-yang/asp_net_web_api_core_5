@@ -4,11 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using todo.infrastructure.Repositories;
 
 namespace todo.mvc.Controllers
 {
     public class TodoController : Controller
     {
+        private ITodoRepository _iTodoRepository;
+
+        public TodoController(ITodoRepository iTodoRepository)
+        {
+            _iTodoRepository = iTodoRepository;
+        }
         public IActionResult Index()
         {
             return View();

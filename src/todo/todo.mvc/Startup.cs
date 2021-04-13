@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.EntityFrameworkCore;
+using todo.infrastructure;
+using todo.infrastructure.Repositories;
 namespace todo.mvc
 {
     public class Startup
@@ -23,6 +25,11 @@ namespace todo.mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TodoContext>(
+                options => 
+                options.UseInMemoryDatabase(TodoContext.DEFAULT_SCHEMA)
+            );
+            services.AddTransient<ITodoRepository, TodoRepository>();
             services.AddControllersWithViews();
         }
 
