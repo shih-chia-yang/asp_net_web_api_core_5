@@ -23,7 +23,7 @@ namespace todo.mvc.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var todoModel= await _iTodoRepository.GetAll();
+            var todoModel = await _iTodoRepository.GetAll();
             return View(todoModel);
         }
 
