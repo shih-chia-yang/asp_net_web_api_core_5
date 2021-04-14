@@ -26,7 +26,7 @@ namespace middleware
         private readonly RequestDelegate _next;
         public Middleware2(RequestDelegate next)
         {
-            this._next = next;x
+            this._next = next;
         }
 
         public async Task Invoke(HttpContext context)
