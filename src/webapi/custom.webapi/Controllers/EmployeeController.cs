@@ -54,15 +54,32 @@ namespace custom.webapi.Controllers
         }
 
         // PUT: api/Employee/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Employee employee)
+        [Route("~/api/Employee")]
+        [HttpPut]
+        public IActionResult Put(int id, [FromBody] Employee employee)
         {
+            if(employee == null||id!=employee.Id)
+                return BadRequest();
+            else
+            {
+                _repo.Update(employee);
+                return new CreatedResult($"/api/Employee/{id}",employee);
+            }
         }
 
+        [Route("~/api/Employee")]
         // DELETE: api/Employee/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
+            var value =_repo.FindById(id);
+            if(value ==null)
+                return NotFound();
+            else
+            {
+                _repo.Update(value);
+                return NoContent();
+            }
         }
     }
 }

@@ -18,6 +18,12 @@ namespace custom.webapi.Repositories
             _context.Add(employee);
         }
 
+        public void Delete(int id)
+        {
+            var updateValue=_context.Where(x=>x.Id == id).FirstOrDefault();
+            _context.Remove(updateValue);
+        }
+
         public Employee FindById(int id)
         {
             return _context.Where(x=>x.Id == id).FirstOrDefault();
@@ -30,7 +36,12 @@ namespace custom.webapi.Repositories
 
         public void Update(Employee employee)
         {
-            
+            var updateValue=_context.Where(x=>x.Id == employee.Id).FirstOrDefault();
+            if(updateValue !=null)
+            {
+                _context.Remove(updateValue);
+                _context.Add(employee);
+            }
         }
 
         protected List<Employee> Init()
