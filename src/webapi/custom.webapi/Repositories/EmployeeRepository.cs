@@ -13,6 +13,11 @@ namespace custom.webapi.Repositories
             _context = Init();
         }
 
+        public void Add(Employee employee)
+        {
+            _context.Add(employee);
+        }
+
         public Employee FindById(int id)
         {
             return _context.Where(x=>x.Id == id).FirstOrDefault();
@@ -21,6 +26,11 @@ namespace custom.webapi.Repositories
         public IEnumerable<Employee> GetAll()
         {
             return _context;
+        }
+
+        public void Update(Employee employee)
+        {
+            
         }
 
         protected List<Employee> Init()

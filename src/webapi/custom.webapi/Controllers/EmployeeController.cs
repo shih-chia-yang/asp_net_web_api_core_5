@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using custom.webapi.Models;
 using custom.webapi.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace custom.webapi.Controllers
         {
             _repo = repo;
         }
-        [Route("api/GetEmployees")]
+        [Route("~/api/Employee")]
         // GET: api/Employee
         [HttpGet]
         public IActionResult GetEmployees()
@@ -26,7 +27,9 @@ namespace custom.webapi.Controllers
         }
 
         // GET: api/Employee/5
-        [HttpGet("{id}", Name = "Get")]
+        // [HttpGet("{id}", Name = "Get")]
+        [Route("~/api/Employee/{id}")]
+        [HttpGet]
         public IActionResult Get(int id)
         {
             var employee = _repo.FindById(id);
@@ -37,14 +40,22 @@ namespace custom.webapi.Controllers
         }
 
         // POST: api/Employee
+        [Route("~/api/Employee")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Employee employee)
         {
+            if(employee==null)
+                return BadRequest();
+            else
+            {
+                _repo.Add(employee);
+                return new CreatedResult($"/api/Employee",employee);
+            }
         }
 
         // PUT: api/Employee/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Employee employee)
         {
         }
 

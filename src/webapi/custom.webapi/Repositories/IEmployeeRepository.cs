@@ -10,5 +10,9 @@ namespace custom.webapi.Repositories
         IEnumerable<Employee> GetAll();
 
         Employee FindById(int id);
+
+        void Add(Employee employee);
+
+        void Update(Employee employee);
     }
 }
