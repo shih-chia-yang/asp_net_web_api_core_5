@@ -24,3 +24,10 @@
 3. startup.cs add di register IRepository
 4. controller add ctor get DI parameter
 5. add GetAll() action & Get(int id) action
+6. add Add() Update() Delete() method and actions
+7. use postman test web api
+
+
+## http status code
+
+[相關連結](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Status)
