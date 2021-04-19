@@ -119,3 +119,90 @@ public class HomeController : Controller
 - controller
 - handler
 - page
+
+## HTTP Verb Template
+
+- [HttpGet]
+- [HttpPost]
+- [HttpPut]
+- [HttpDelete]
+- [HttpHead]
+- [HttpPatch]
+
+
+## Route Template
+- 所有的HTTP Verb Template都是 route telplates
+- route
+
+## routing with HTTP Verb Attribute
+
+```aspx-csharp
+
+[Route("api/[controller]")]
+[ApiController]
+public class Test2Controller:ControllerBase
+{
+    ///URL = Get api/Test2    
+    [HttpGet]
+    public IActionResult ListProducts()
+    {
+        return Content("ProductList");
+    }
+    
+    ///URL Get api/Test2/123
+    [HttpGet("{id}")]
+    public IActionResult GetProduct(string id)
+    {
+        return Content($"product id:{id}");
+    }
+
+    [HttpGet("{int/{id:int}}")]
+    public IActionResult GetIntProduct(int id)
+    {
+        return COntent($"product int id:{id}");
+    }
+
+}
+
+``` 
+
+## route name
+
+可以使用route name根據特定route 來產生URL，route name：
+1. 不會影響route的URL比對行為
+2. 僅用於產生URL
+
+在整個應用程式中route name必須是唯一的
+
+```aspx-csharp
+
+[HttpGet("/product/{id}",name="ProductList")]
+public IActionResult GetProduct(int id)
+{
+    return Content("{id}");
+}
+```
+
+## multi route
+`Attribute-based`支援定義多個route來達到相同的動作，最常見的用法是模擬`Convention-based`的方法
+```aspx-csharp
+
+[Route("example")]
+[Route("[controller]")]
+public class Test1Controller:ControllerBase
+{
+
+    [Route("")]  ///Test1/ or example/
+    [Route("Index")] ///Test1/Index or example/Index
+    public IActionResult Index()
+    {
+        return Content("Index");
+    }
+}
+
+```
+
+## 相關連結
+[ASP.NET Core 中的路由至控制器動作](https://docs.microsoft.com/zh-tw/aspnet/core/mvc/controllers/routing?view=aspnetcore-5.0#routing-token-replacement-templates-ref-label)
+
+[ASP.NET Core 中的路由](https://docs.microsoft.com/zh-tw/aspnet/core/fundamentals/routing?view=aspnetcore-5.0)
