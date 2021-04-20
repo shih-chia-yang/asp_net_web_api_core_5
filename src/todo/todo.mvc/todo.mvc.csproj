@@ -9,11 +9,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\todo.domain\todo.domain.csproj" />
-    <ProjectReference Include="..\todo.infrastructure\todo.infrastructure.csproj" />
+    <ProjectReference Include="../todo.domain/todo.domain.csproj" />
+    <ProjectReference Include="../todo.infrastructure/todo.infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

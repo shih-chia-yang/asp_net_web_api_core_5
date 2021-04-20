@@ -50,7 +50,7 @@ namespace todo.mvc.Controllers
             return Ok(HttpStatusCode.OK);
         }
 
-        [Route("~/api/DeleteTodo")]
+        [Route("~/api/DeleteTodo/{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTodo([FromBody]TodoItem item)
         {
