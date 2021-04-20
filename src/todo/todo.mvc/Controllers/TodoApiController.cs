@@ -14,6 +14,7 @@ namespace todo.mvc.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
+
     public class TodoApiController : ControllerBase
     {
         private ITodoRepository _iTodoRepo;
@@ -25,15 +26,42 @@ namespace todo.mvc.Controllers
             _context=context;
         }
 
+        /// <summary>
+        ///  get all TodoItems
+        ///
+        /// </summary>
+        /// <returns>IEnumerableTodoItem</returns>
         [Route("~/api/GetAllTodos")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IEnumerable<TodoItem>> GetAllTodos()
         {
             return await _iTodoRepo.GetAll();
         }
 
+        /// <summary>
+        /// 新增 TodoItem
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// POST /Todo
+        /// {
+        ///        "Id": 1,
+        ///        "Name": "Item1",
+        ///        "Event":"do something"
+        /// }
+        /// </remarks>
+        /// <param name="item">TodoItem model</param>
+        /// <returns>新增todo 結果</returns>
+        /// <response code="201">item create successfully</response>
+        /// <response code="400">if TodoItem model is null</response>
         [Route("~/api/AddTodo")]
         [HttpPost]
+        [ProducesResponseType(typeof(TodoItem),201)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<TodoItem> AddTodo([FromBody]TodoItem item)
         {
             var addNew=_iTodoRepo.Add(item);
@@ -50,7 +78,7 @@ namespace todo.mvc.Controllers
             return Ok(HttpStatusCode.OK);
         }
 
-        [Route("~/api/DeleteTodo/{id}")]
+        [Route("~/api/DeleteTodo")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTodo([FromBody]TodoItem item)
         {

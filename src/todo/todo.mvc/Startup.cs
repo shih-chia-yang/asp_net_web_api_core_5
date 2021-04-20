@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using todo.infrastructure;
 using todo.infrastructure.Repositories;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace todo.mvc
 {
@@ -33,7 +35,28 @@ namespace todo.mvc
             );
             services.AddTransient<ITodoRepository, TodoRepository>();
             services.AddControllersWithViews();
-            services.AddSwaggerGen(c=>c.SwaggerDoc("v1",new OpenApiInfo{Title="Todo API",Version="v1"}));
+            services.AddSwaggerGen(c=>{   
+                c.SwaggerDoc("v1",new OpenApiInfo
+                {
+                    Version="v1",
+                    Title="Todo API",
+                    Description="A simple example ASP.NET Core Web API",
+                    TermsOfService= new Uri("https://ulist.moe.gov.tw"),
+                    Contact= new OpenApiContact{
+                        Name="Chia-yang,shih",
+                        Email="heipuser@yuntech.edu.tw",
+                        Url= new Uri("https://ulist.moe.gov.tw/Home/Contact")
+                    },
+                    License = new OpenApiLicense{
+                        Name="Use under M.O.E",
+                        Url=new Uri("https://depart.moe.edu.tw/ed2200/"),
+                    }
+                });
+
+                var xmlFile=$"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath=Path.Combine(AppContext.BaseDirectory,xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
