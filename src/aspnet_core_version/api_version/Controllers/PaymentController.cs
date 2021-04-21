@@ -8,11 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace api_version.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{ver:apiVersion}/Test")]
+    [ApiVersion("2.0")]
+    [Route("api/payment")]
     [ApiController]
-    public class TestControllerv1 : ControllerBase
+    public class PaymentController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get2()=>Content("Version 1");
+        public IActionResult Get()=>Content("Version 1");
+
+        [MapToApiVersion("2.0")]
+        [HttpGet]
+        public IActionResult GetV2()=>Content("Version 2");
     }
 }
