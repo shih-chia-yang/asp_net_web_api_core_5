@@ -12,7 +12,8 @@ namespace api_version.Controllers
     [ApiController]
     public class TestControllerv1 : ControllerBase
     {
+        [Route("Get")]
         [HttpGet]
-        public IActionResult Get()=>Content("Version 1");
+        public IActionResult Get2()=>Content("Version 1");
     }
 }
