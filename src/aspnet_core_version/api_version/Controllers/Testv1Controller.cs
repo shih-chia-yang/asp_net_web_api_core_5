@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api_version.Controllers
 {
-    [ApiVersion("1.0")]
+    [ApiVersion("1.0",Deprecated=true)]
     [Route("api/v{ver:apiVersion}/Test")]
     [ApiController]
     public class TestControllerv1 : ControllerBase

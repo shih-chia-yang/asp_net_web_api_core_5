@@ -126,6 +126,13 @@ version individual action methods within a controller using `[MapToApiVersion]`
 1. create controller `paymentController`
 2. enable Api version `options.ApiVersionReder=new HeaderApiVersionReader("api-version")`
 3. add `[MapToApiVersion]` on actions
+4. use postman test api
+
+## Deprecating a Version
+version of API is deprecated by setting the `Deprecated` property on the `[ApiVersion]` attribute
+
+1. add `[ApiVersion("1.0",Deprecated=true)]`
+2. header will show `api-deprecated-version:1.0` & `api-supported-version:2.0`
 
 ## Troubleshooting and Solution
 
