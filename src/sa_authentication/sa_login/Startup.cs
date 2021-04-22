@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using sa_login.Repositories;
 
 namespace sa_login
 {
@@ -30,7 +31,10 @@ namespace sa_login
                     options.AccessDeniedPath= new PathString("/Security/Access");
                     options.LoginPath=new PathString("/Security/Login");
                 });
-            services.AddHttpContextAccessor();
+            services.AddAuthorization(options=>{
+                options.AddPolicy("Manager",policy=>policy.RequireClaim("CanManaged"));
+            });
+            services.AddTransient<IUserRepository,UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

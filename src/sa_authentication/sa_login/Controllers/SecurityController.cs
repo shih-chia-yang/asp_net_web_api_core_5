@@ -5,12 +5,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using sa_login.Domain;
 using sa_login.Models;
+using sa_login.Repositories;
 
 namespace sa_login.Controllers
 {
     public class SecurityController : Controller
     {
+        private readonly IUserRepository _userRepo;
+
+        public SecurityController(IUserRepository repo)
+        {
+            _userRepo = repo;
+        }
         
         public IActionResult Login(string requestPath)
         {
@@ -21,12 +29,17 @@ namespace sa_login.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromForm] LoginModel login)
         {
-            if(!IsAuthentic(login.Email,login.Password))
+            var loginUser =IsAuthentic(login.Email,login.Password);
+            if(loginUser==null)
                 return View();
+                
             List<Claim> claims = new List<Claim>(){
                 new Claim(ClaimTypes.Name,"Bob Rich"),
-                new Claim(ClaimTypes.Email,login.Email)
+                new Claim(ClaimTypes.Email,login.Email),
             };
+
+            if(loginUser.CanManaged)
+                claims.Add(new Claim("CanManaged",loginUser.CanManaged?"Y":"N"));
 
             ClaimsIdentity identity = new ClaimsIdentity(claims,"cookie");
             ClaimsPrincipal principal =new ClaimsPrincipal(identity);
@@ -53,9 +66,9 @@ namespace sa_login.Controllers
             return View();
         }
 
-        private bool IsAuthentic(string userName,string password)
+        private User IsAuthentic(string userName,string password)
         {
-            return (userName=="stone" && password=="1234");
+            return _userRepo.Find(userName,password);
         }
     }
 }

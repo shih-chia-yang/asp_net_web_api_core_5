@@ -10,7 +10,8 @@ using sa_login.Models;
 
 namespace sa_login.Controllers
 {
-    [Authorize]
+    // [Authorize]
+    [Authorize(Policy="Manager")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,6 +27,7 @@ namespace sa_login.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
