@@ -21,8 +21,12 @@ namespace sa_login.Controllers
             _logger = logger;
         }
 
-        
         public IActionResult Index()
+        {
+            return View();
+        }
+        
+        public IActionResult About()
         {
             return View();
         }

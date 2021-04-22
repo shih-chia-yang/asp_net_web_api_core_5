@@ -33,7 +33,7 @@ claims必須保留才能對資源進行訪問或存取
 
 - 簡易的claim policy只尋找claim是否存在，而不檢查其值。
 
-1. building claim and registering policies
+## building claim and registering policies
 
 ```aspx-csharp
 public void ConfigureServices(IServiceCollection services)
@@ -71,7 +71,7 @@ public class ManagerController:Controller
 }
 ```
 
-## implementing claims policy
+## implementing claims policy,test simple claim policy
 
 1. add User Model
 2. add IUserRepository & UserRepository
@@ -81,3 +81,77 @@ public class ManagerController:Controller
 6. modify Login 當CanManaged=true時，增加claim `CanManaged`
 7. HomeController add `[Authorize(Policy="Manager")]`
 8. Privacy action add `[AllowAnonymous]` 
+
+
+
+## Multiple Policy Evaluation
+
+when multiple policies are applied on a controller/action, they from `AND` logical operation
+
+1. add Admin Claim Policy
+將policy 設定檢查值新增 Id，並設值"1"
+
+```aspx-csharp
+options.AddPolicy("Admin",policy=>policy.RequireClaim("Id","1"));
+```
+2. HomeController add About action and add `[Authorize(Policy="Admin")]`
+
+3. if we want to access About action ,must be have `Manager` & `Admin` policy holder
+
+## writing Custom Policy Handler
+
+an authorization requirement is a collection of data parameter that a policy can use to evaluate the current user principal
+
+implements `IAuthorizationRequirement`, which is an empty marker interface.
+
+1. create a `Admin` claims policy at action
+    
+    ```aspx-csharp
+    [Authorize(Policy="Admin")]
+    ```
+
+2. create `ManagerRequirement` inherited from `IAuthorizationRequirement`
+    
+    ```aspx-csharp
+    public class ManagerRequirement : IAuthorizationRequirement
+    {
+        public bool IsAdmin { get; set; }
+        public ManagerRequirement(bool isAdmin)
+        {
+            IsAdmin = isAdmin;
+        }
+    }
+    ```
+
+3. create `ManagerRequirementHandler` inherited from `AuthorizationHandler<ManagerRequirement>`
+    
+    ```aspx-csharp
+    public class ManagerRequirementHandler : AuthorizationHandler<ManagerRequirement>
+    {
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ManagerRequirement requirement)
+        {
+            if(!context.User.HasClaim(c=>c.Type=="CanManaged"))
+                return Task.CompletedTask;
+            bool isAdmin=Convert.ToBoolean(context.User.FindFirst(c=>c.Type=="CanManaged").Value);
+            if(isAdmin==requirement.IsAdmin)
+                context.Succeed(requirement);
+            return Task.CompletedTask;
+        }
+    }
+    ```
+
+4. add policy and Requirement
+    
+    ```aspx-csharp
+    options.AddPolicy("Admin",policy=>policy.AddRequirements(new ManagerRequirement(true)));
+    ```
+
+5. register ManagerRequirementHandler to DI
+    
+    ```aspx-csharp
+    services.AddScoped<IAuthorizationHandler, ManagerRequirementHandler>();
+    ```
+
+6. test ManagerRequirement
+    1. test user:stone expected result is can access, then execute result was access successfully
+    2. test user:john expected result is can't access, then execute result was access denied

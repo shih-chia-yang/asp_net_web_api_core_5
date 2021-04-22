@@ -25,9 +25,9 @@ namespace sa_login.Repositories
         {
             _context = new List<User>();
             _context.Add(new User(){Id=1,Name="stone",Email="stone@test.com.tw",Password="1234",CanManaged=true});
-            _context.Add(new User(){Id=1,Name="john",Email="john@test.com.tw",Password="1234",CanManaged=false});
-            _context.Add(new User(){Id=1,Name="eva",Email="eva@test.com.tw",Password="1234",CanManaged=true});
-            _context.Add(new User(){Id=1,Name="peter",Email="peter@test.com.tw",Password="1234",CanManaged=false});
+            _context.Add(new User(){Id=2,Name="john",Email="john@test.com.tw",Password="1234",CanManaged=false});
+            _context.Add(new User(){Id=3,Name="eva",Email="eva@test.com.tw",Password="1234",CanManaged=true});
+            _context.Add(new User(){Id=4,Name="peter",Email="peter@test.com.tw",Password="1234",CanManaged=false});
         }
 
         public User Find(int id)

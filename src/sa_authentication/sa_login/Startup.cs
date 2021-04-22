@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using sa_login.Auth;
 using sa_login.Repositories;
 
 namespace sa_login
@@ -33,8 +35,11 @@ namespace sa_login
                 });
             services.AddAuthorization(options=>{
                 options.AddPolicy("Manager",policy=>policy.RequireClaim("CanManaged"));
+                options.AddPolicy("Admin",policy=>policy.AddRequirements(new ManagerRequirement(true)));
+                // options.AddPolicy("AtLeast21",policy=>policy.RequireClaim("EEE"));
             });
             services.AddTransient<IUserRepository,UserRepository>();
+            services.AddScoped<IAuthorizationHandler, ManagerRequirementHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

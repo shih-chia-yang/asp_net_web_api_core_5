@@ -36,10 +36,12 @@ namespace sa_login.Controllers
             List<Claim> claims = new List<Claim>(){
                 new Claim(ClaimTypes.Name,"Bob Rich"),
                 new Claim(ClaimTypes.Email,login.Email),
+                new Claim("Id",loginUser.Id.ToString())
             };
 
             if(loginUser.CanManaged)
-                claims.Add(new Claim("CanManaged",loginUser.CanManaged?"Y":"N"));
+                claims.Add(new Claim("CanManaged",loginUser.CanManaged.ToString()));
+
 
             ClaimsIdentity identity = new ClaimsIdentity(claims,"cookie");
             ClaimsPrincipal principal =new ClaimsPrincipal(identity);
