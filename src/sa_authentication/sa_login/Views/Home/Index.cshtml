@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h2>ASP.NET Core Authentication</h2>
+    <p>You are on the <strong>Home</strong> page at @DateTime.Now.ToString()</p>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <a asp-controller="Security" asp-action="Logout">Logout</a>
+</div>

@@ -1,0 +1,36 @@
+
+@model sa_login.Models.LoginModel;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <form asp-controller="Security" asp-action="Login" method="post">
+        @Html.Hidden("requestPath",(object)ViewBag.RequestPath)
+        <div class="form-group">
+            @Html.LabelFor(x=>x.Email, new {@class="col-md-2 control-lable"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(x=>x.Email,new {@class="form-control",@maxlength=40,@autocomplete="off"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x=>x.Password,new {@class="col-md-2 control-lable"});
+            <div class="col-md-10">
+                @Html.TextBoxFor(x=>x.Password,new {@class="form-control",@maxlength="35",@autocomplete="off"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="登入" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>
