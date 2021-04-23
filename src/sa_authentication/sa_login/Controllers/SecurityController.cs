@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sa_login.Domain;
 using sa_login.Models;
@@ -32,11 +33,12 @@ namespace sa_login.Controllers
             var loginUser =IsAuthentic(login.Email,login.Password);
             if(loginUser==null)
                 return View();
-                
+            HttpContext.Session.SetString("userName", loginUser.Name);
             List<Claim> claims = new List<Claim>(){
                 new Claim(ClaimTypes.Name,"Bob Rich"),
                 new Claim(ClaimTypes.Email,login.Email),
-                new Claim("Id",loginUser.Id.ToString())
+                new Claim("Id",loginUser.Id.ToString()),
+                new Claim("HasExpenseCredit",loginUser.HasExpenseCredit.ToString())
             };
 
             if(loginUser.CanManaged)

@@ -11,6 +11,8 @@ namespace sa_login.Domain
 
         public string Password { get; set; }
 
-        public bool CanManaged { get; set; }        
+        public bool CanManaged { get; set; }
+
+        public bool HasExpenseCredit { get; set; }        
     }
 }

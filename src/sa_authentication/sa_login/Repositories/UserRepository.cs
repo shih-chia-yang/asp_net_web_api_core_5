@@ -24,10 +24,10 @@ namespace sa_login.Repositories
         private void Init()
         {
             _context = new List<User>();
-            _context.Add(new User(){Id=1,Name="stone",Email="stone@test.com.tw",Password="1234",CanManaged=true});
-            _context.Add(new User(){Id=2,Name="john",Email="john@test.com.tw",Password="1234",CanManaged=false});
-            _context.Add(new User(){Id=3,Name="eva",Email="eva@test.com.tw",Password="1234",CanManaged=true});
-            _context.Add(new User(){Id=4,Name="peter",Email="peter@test.com.tw",Password="1234",CanManaged=false});
+            _context.Add(new User(){Id=1,Name="stone",Email="stone@test.com.tw",Password="1234",CanManaged=true,HasExpenseCredit=true});
+            _context.Add(new User(){Id=2,Name="john",Email="john@test.com.tw",Password="1234",CanManaged=false,HasExpenseCredit=false});
+            _context.Add(new User(){Id=3,Name="eva",Email="eva@test.com.tw",Password="1234",CanManaged=true,HasExpenseCredit=false});
+            _context.Add(new User(){Id=4,Name="peter",Email="peter@test.com.tw",Password="1234",CanManaged=false,HasExpenseCredit=false});
         }
 
         public User Find(int id)

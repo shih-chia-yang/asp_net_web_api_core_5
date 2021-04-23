@@ -1,13 +1,32 @@
-
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Manager";
     Layout = "_Layout";
 }
 
 <h1>Manager</h1>
-<div class="text-center">
-    <h1 class="display-4">Welcome Manager</h1>
-    <h2>ASP.NET Core Authentication</h2>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a asp-controller="Security" asp-action="Logout">Logout</a>
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+        @Html.Label("Pay Expenses","PayExpense",new {@class="col-md-2 control-lable"})
+        <div class="col-md-10">
+            <a asp-control="Manager" 
+            asp-action="PayExpense" 
+            asp-route-Name=@Context.Session.GetString("userName")
+            asp-route-HasExpenseCredit="true">Pay Expense</a>
+        </div>    
+        @*  *@
 </div>
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <h1 class="display-4">Welcome Manager</h1>
+            <span>Name:@Context.Session.GetString("userName")</span>
+            <h2>ASP.NET Core Authentication</h2>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <a asp-controller="Security" asp-action="Logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+

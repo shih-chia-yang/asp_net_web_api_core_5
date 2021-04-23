@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using sa_login.Auth;
+using sa_login.Auth.PayExpense;
 using sa_login.Repositories;
 
 namespace sa_login
@@ -28,6 +29,7 @@ namespace sa_login
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
             services.AddAuthentication("SaSecurityScheme")
                 .AddCookie("SaSecurityScheme",options=>{
                     options.AccessDeniedPath= new PathString("/Security/Access");
@@ -36,10 +38,12 @@ namespace sa_login
             services.AddAuthorization(options=>{
                 options.AddPolicy("Manager",policy=>policy.RequireClaim("CanManaged"));
                 options.AddPolicy("Admin",policy=>policy.AddRequirements(new ManagerRequirement(true)));
+                options.AddPolicy("HasExpenseCredit", policy => policy.AddRequirements(new ManagerPayExpenseRequirement()));
                 // options.AddPolicy("AtLeast21",policy=>policy.RequireClaim("EEE"));
             });
             services.AddTransient<IUserRepository,UserRepository>();
             services.AddScoped<IAuthorizationHandler, ManagerRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler,ManagerPayExpenseRequirementHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +61,7 @@ namespace sa_login
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

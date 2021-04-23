@@ -1,0 +1,9 @@
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@{
+    ViewData["Title"] = "PayExpense";
+}
+<h2>Manager Portal</h2>
+<h3>You can PayExpenses - You are manager with Expense Credit</h1>
+<a asp-controller="Home" asp-action="Index">back to home</a>
+<a asp-controller="Security" asp-action="Logout">Logout</a>
