@@ -155,3 +155,57 @@ implements `IAuthorizationRequirement`, which is an empty marker interface.
 6. test ManagerRequirement
     1. test user:stone expected result is can access, then execute result was access successfully
     2. test user:john expected result is can't access, then execute result was access denied
+
+## Handler Registration
+
+1. add PayExpense folder
+    - add ManagerPayExpenseRequirement.cs
+    - add ManagerPayExpenseRequirementHandler.cs
+
+2. Startup.cs add ClaimPolicy
+
+    ```aspx-csharp
+    options.AddPolicy("HasExpenseCredit", policy => policy.AddRequirements(new ManagerPayExpenseRequirement()));
+    ```
+
+3. ManagerPayExpenseRequirementHandler Register DI
+
+4. ManagerController add PayExpense action
+    
+    ```aspx-csharp
+        public async Task<IActionResult> PayExpense(User inputModel)
+        {
+            var result = await _authorizationService.AuthorizeAsync(User, inputModel, "HasExpenseCredit");
+            if(!result.Succeeded)
+                return Forbid();
+            return View();
+        }
+    ```
+
+5. ManagerController Index.cshtml add PayExpense link
+    
+    ```aspx-csharp
+    <div class="form-group">
+        @Html.Label("Pay Expenses","PayExpense",new {@class="col-md-2 control-lable"})
+            <div class="col-md-10">
+                <a asp-control="Manager" 
+                asp-action="PayExpense" 
+                asp-route-Name=@Context.Session.GetString("userName")
+                asp-route-HasExpenseCredit="true">Pay Expense</a>
+            </div>    
+        </div>
+    ```
+
+6. add PayExpense.cshtml
+    
+    ```aspx-csharp
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+    @{
+        ViewData["Title"] = "PayExpense";
+    }
+    <h2>Manager Portal</h2>
+    <h3>You can PayExpenses - You are manager with Expense Credit</h1>
+    <a asp-controller="Home" asp-action="Index">back to home</a>
+    <a asp-controller="Security" asp-action="Logout">Logout</a>
+    ```
