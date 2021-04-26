@@ -139,6 +139,13 @@ app.UseEndpoint(endpoints=>
     2. `multipart/form-data`
     3. `text/plain`
 
+## Troubleshooting and Solution
+
+the ssl connection could not be established, see inner exception.
+
+[Trusting a self signed certificate](https://bbs.archlinux.org/viewtopic.php?id=251330)
+
+[ trust self-signed SSL certificate](https://bbs.archlinux.org/viewtopic.php?pid=1776753#p1776753)
 ## 相關資源
 
 [跨資源共享](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS)
