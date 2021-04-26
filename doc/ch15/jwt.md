@@ -37,3 +37,8 @@ Signature: created by signing (encoded header + encoded payload) using a secret 
 ## vs code extension REST-Client
 
 [docs](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+[VSCode 實用套件： REST Client](https://blog.rex-tsou.com/2017/10/vscode-%E5%AF%A6%E7%94%A8%E5%A5%97%E4%BB%B6-rest-client/)
+
+## 網路資源
+
+[ASP.NET 5: Authorization and Authentication with Bearer and JWT](https://levelup.gitconnected.com/asp-net-5-authorization-and-authentication-with-bearer-and-jwt-2d0cef85dc5d)
