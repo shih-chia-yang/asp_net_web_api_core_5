@@ -1,0 +1,16 @@
+
+### Test WeatherForecast
+Get https://localhost:5001/WeatherForecast
+
+### Test Security
+Post https://localhost:5001/api/Security HTTP/1.1
+content-Type: application/json
+
+{
+    "UserName":"stone",
+    "Password":"1234"
+}
+
+## Test Testapi
+Get https://localhost:5001/api/Test HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9uZSIsImp0aSI6IjFiNjE2YzE1LWY5NWEtNGRkMS04OGMzLTI0ZGU5YzlkY2M5ZiIsIk1lbWJlcklkIjoiMTAwIiwiZXhwIjoxNjE5NTEzODkyLCJpc3MiOiJIZWlwLlNlY3VyaXR5Lkp3dCIsImF1ZCI6IkhlaXAuU2VjdXJpdHkuSnd0In0.ePFiQv7FCB0TKy69tdZyCNdeMinQNiBw6wkoWhIzLm4
