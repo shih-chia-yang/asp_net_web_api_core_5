@@ -135,3 +135,5 @@ dotnet new classlib -o Employee.Domain
     - add CRUD action，書本範例中有關context操作部份寫在controller中，可將這部份獨立做Repository，註冊DI，於controller呼叫使用，將有關資料庫操作部份將controller 前端動作切割。
     
     - 前端javascript暫時跳過
+    
+    - 調整launchsetting.json中的launchUrl，可設定初始頁面
