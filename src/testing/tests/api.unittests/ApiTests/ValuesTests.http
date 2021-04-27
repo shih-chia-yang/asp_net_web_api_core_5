@@ -1,0 +1,9 @@
+## Test ValuesController Get
+Get https://localhost:5001/api/Values/Get HTTP/1.1
+
+## Test ValueController Post
+
+POST https://localhost:5001/api/Values/Post  HTTP/1.1
+content-Type: application/json
+
+123
