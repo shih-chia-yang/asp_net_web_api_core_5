@@ -1,0 +1,58 @@
+@using code.web.ViewModels
+@model Instructor
+@{
+    ViewData["Title"] = "Detail";
+}
+<div>
+    <h4>Instructor</h4>
+    <hr/>
+    <dl >
+        <dt>
+            @Html.DisplayNameFor(model=>model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model=>model.LastName)
+        </dd>
+        <dt>@Html.DisplayNameFor(model=>model.FirstName)</dt>
+        <dd>@Html.DisplayFor(model=>model.FirstName)</dd>
+        <dt>@Html.DisplayNameFor(model=>model.HireDate)</dt>
+        <dd>@Html.DisplayFor(model=>model.HireDate)</dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Catalog Name</th>
+                    <th>Tuition</th>
+                    <th>StartDate</th>
+                    <th>Course Title</th>
+                </tr>
+                    @if(Model.Class!=null)
+                    {
+                        foreach (var item in Model.Class)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelitem=>item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelitem=>item.Tuition)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelitem=>item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Course.Title)
+                                </td>
+                            </tr>
+                        }
+                    }
+            </table>
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

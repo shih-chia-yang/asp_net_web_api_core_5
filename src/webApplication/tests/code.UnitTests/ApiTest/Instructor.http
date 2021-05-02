@@ -1,0 +1,31 @@
+
+#getAll
+get https://localhost:5101/api/Instructors
+
+
+#findAsync
+get https://localhost:5101/api/Instructor/1
+
+#addnew
+
+post  https://localhost:5101/api/Instructor/Add
+Content-Type: application/json
+
+{
+    "LastName":"testname",
+    "FirstName":"teacher",
+    "DateTime":"2021-05-01"
+}
+
+#update
+put https://localhost:5101/api/Instructor/Update
+Content-Type: application/json
+
+{
+    "Id":"1",
+    "LastName":"stone",
+    "FirstName":"eric",
+    "DateTime":"2021-02-01"
+}
+# delete
+delete https://localhost:5101/api/Instructor/Delete/9
