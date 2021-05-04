@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using code.Api.Application.Command;
 using code.Api.Application.Queries;
 using code.Domain.Event;
@@ -12,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace code.Api.Registry
 {
@@ -23,7 +27,11 @@ namespace code.Api.Registry
             services.AddControllers(control=>{
                 control.AllowEmptyInputInBodyModelBinding = true;
             })
-            .AddNewtonsoftJson()
+            .AddNewtonsoftJson(options=>{
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            })
             .SetCompatibilityVersion(CompatibilityVersion.Latest);
             return services;
         }

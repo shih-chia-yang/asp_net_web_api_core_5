@@ -1,31 +1,19 @@
+using System.Linq;
+using System.Threading;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using code.Api.Application.Queries;
+using code.Api.Application.Dto;
+using code.Api.Extensions;
 
 namespace code.Api.Application.Queries
 {
-    public class SortingParams
-    {
-        public string SortBy { get; set; } = string.Empty;
-        public bool IsAscending { get; set; }
-
-        public SortingParams()
-        {
-            
-        }
-
-        public SortingParams(string sorting,bool isAscending)
-        {
-            SortBy = sorting;
-            IsAscending = isAscending;
-        }
-    }
     public interface IStudentQueries
     {
-        Task<Student> FindAsync(int id);
+        Task<StudentDto> FindAsync(int id);
 
-        Task<IEnumerable<Student>> GetAllAsync(SortingParams param=null);
+        Task<StudentListDto> PaginationAsync(int limit, int page, CancellationToken cancellationToken,SortingParams param=null);
+        Task<IEnumerable<StudentDto>> GetAllAsync(SortingParams param=null);
 
-        Task<IEnumerable<Student>> Sort(SortingParams param);
+        // IQueryable<StudentDto> Sort(SortingParams param);
     }
 }

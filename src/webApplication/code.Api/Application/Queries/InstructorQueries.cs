@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using code.Api.Application.Dto;
 using code.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,25 +14,25 @@ namespace code.Api.Application.Queries
         {
             _context = context;
         }
-        public async Task<Instructor> FindAsync(int id)
+        public async Task<InstructorDto> FindAsync(int id)
         {
             var result = await _context.Instructors
             .Where(x => x.Id==id).AsNoTracking()
             .Include(ca=>ca.Class)
             .ThenInclude(c=>c.Course)
-            .Select(x=>new Instructor()
+            .Select(x=>new InstructorDto()
             {
                 Id=x.Id,
                 LastName=x.LastName,
                 FirstName=x.FirstName,
                 HireDate=x.HireDate,
-                Class=x.Class.Select(ca=>new Catalog()
+                Class=x.Class.Select(ca=>new CatalogDto()
                 {
                     Id=ca.Id,
                     Name=ca.Name,
                     Tuition=ca.Tuition,
                     StartDate=ca.StartDate,
-                    Course= new Course()
+                    Course= new CourseDto()
                     {
                         Id=ca.Course.Id,
                         Title=ca.Course.Title,
@@ -42,10 +43,10 @@ namespace code.Api.Application.Queries
             return result;
         }
 
-        public async Task<IEnumerable<Instructor>> GetAllAsync()
+        public async Task<IEnumerable<InstructorDto>> GetAllAsync()
         {
             var result =await _context.Instructors.AsNoTracking()
-                    .Select(x=>new Instructor()
+                    .Select(x=>new InstructorDto()
                     {
                         Id=x.Id,
                         LastName=x.LastName,

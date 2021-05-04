@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using code.Domain.Event;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using code.Api.Extensions;
+using code.Api.Application.Dto;
+using code.Api.Extensions.Pagination;
 
 namespace code.Api.Controllers
 {
@@ -27,6 +31,8 @@ namespace code.Api.Controllers
         private readonly IRequestHandler<UpdateStudentCommand, bool> _updateStudentCommand;
 
         private readonly IRequestHandler<DeleteStudentCommand, bool> _deleteStudentCommand;
+
+        public record UrlQueryParameters(int Limit = 50, int Page = 1);
         public StudentsController(IStudentQueries studentQueries,
         IRequestHandler<CreateStudentCommand, bool> createStudentCommand,
         IRequestHandler<UpdateStudentCommand,bool> updateStudentCommand,
@@ -71,20 +77,37 @@ namespace code.Api.Controllers
         /// <response code="200">查詢成功</response>
         /// <response code="204">查無此結果</response>
         /// <response code="400">something goes wrong</response>
-        [Route("~/api/Student")]
+        [Route("~/api/Student",Name=nameof(GetAll))]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAll([FromQuery]SortingParams sorting)
+        public async Task<IActionResult> GetAll(
+        [FromQuery] UrlQueryParameters urlQueryParameters,
+        [FromQuery]SortingParams sorting)
         {
-            IEnumerable<Student> viewmodel = Enumerable.Empty<Student>();
+            StudentListDto viewmodel;
             if(sorting !=null && !string.IsNullOrEmpty(sorting.SortBy))
-                viewmodel = await _studentQueries.GetAllAsync(sorting);
+                viewmodel = await _studentQueries.PaginationAsync(urlQueryParameters.Limit,urlQueryParameters.Page,CancellationToken.None,sorting);
             else
-                viewmodel = await _studentQueries.GetAllAsync();
-            
-            return Ok(viewmodel);
+                viewmodel = await _studentQueries.PaginationAsync(urlQueryParameters.Limit,urlQueryParameters.Page,CancellationToken.None);
+            // viewmodel=GeneratePageLinks(urlQueryParameters, viewmodel);
+            return Ok(GeneratePageLinks(urlQueryParameters, viewmodel));
+        }
+
+        private StudentListDto GeneratePageLinks(UrlQueryParameters queryParameters,StudentListDto response)
+        {
+            if(response.CurrentPage>1)
+            {
+                var prevRoute = Url.RouteUrl(nameof(GetAll), new { limit=queryParameters.Limit,page =queryParameters.Page-1 });
+                response.AddResourceLink(LinkedResourceType.Prev, prevRoute);
+            }
+            if(response.CurrentPage<response.TotalPages)
+            {
+                var nextRoute = Url.RouteUrl(nameof(GetAll), new {limit= queryParameters.Limit, page = queryParameters.Page + 1});
+                response.AddResourceLink(LinkedResourceType.Next, nextRoute);
+            }
+            return response;
         }
 
         /// <summary>

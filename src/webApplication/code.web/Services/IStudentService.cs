@@ -7,7 +7,7 @@ namespace code.web.Services
 {
     public interface IStudentService
     {
-        Task<IEnumerable<Student>> GetAllAsync(SortOrder sort=null);
+        Task<StudentResponseViewModel> GetAllAsync(SortOrder sort=null,int limit=2,int page=1);
 
         Task<Student> FindAsync(string StudentId);
 

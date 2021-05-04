@@ -17,10 +17,11 @@ namespace code.web.Controllers
             _studentSvc = studentSvc;
         }
 
-        public async Task<IActionResult> Index([FromQuery]SortOrder sort)
+        public async Task<IActionResult> Index([FromQuery]SortOrder sort,[FromQuery]int? page)
         {
             ViewData["NameSortParm"] = sort.SortBy=="LastName" ? "LastName_desc" : "LastName";
             ViewData["DateSortParm"] = sort.SortBy=="EnrollmentDate" ?"EnrollmentDate_desc": "EnrollmentDate";
+            sort.SortBy=sort.SortBy ?? "LastName";
             if(sort!=null && sort.SortBy.Contains("desc"))
             {
                 sort.SortBy=sort.SortBy.Replace("_desc","");
@@ -28,9 +29,11 @@ namespace code.web.Controllers
             }
             else
                 sort.IsAscending = true;
-            var model =await _studentSvc.GetAllAsync(sort);
+            int currentPage = page.HasValue ? page.Value : 1;
+            var model =await _studentSvc.GetAllAsync(sort,2,currentPage);
             return View(model);
         }
+        
 
         public async Task<IActionResult> Detail(int id)
         {

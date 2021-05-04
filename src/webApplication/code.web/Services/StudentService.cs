@@ -7,6 +7,7 @@ using code.web.Services.Dto;
 using code.web.ViewModels;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace code.web.Services
 {
@@ -47,13 +48,15 @@ namespace code.web.Services
             return JsonConvert.DeserializeObject<Student>(responseString);
         }
 
-        public async Task<IEnumerable<Student>> GetAllAsync(SortOrder sort)
+        public async Task<StudentResponseViewModel> GetAllAsync(SortOrder sort,int limit=2,int page=1)
         {
             var uri = API.Student.BaseUri(_studentByPassUrl);
             if(sort !=null)
             {
                 var query = new Dictionary<string, string>
                 {
+                    ["Limit"]=limit.ToString(),
+                    ["Page"]=page.ToString(),
                     ["SortBy"] = sort.SortBy,
                     ["IsAscending"] = sort.IsAscending.ToString(),
                 };
@@ -61,9 +64,7 @@ namespace code.web.Services
             }
             var response = await _apiClient.GetAsync(uri);
             var responseString = response.Content.ReadAsStringAsync().Result;
-            return string.IsNullOrEmpty(responseString) ?
-                Enumerable.Empty<Student>() :
-                JsonConvert.DeserializeObject<IEnumerable<Student>>(responseString);
+            return JsonConvert.DeserializeObject<StudentResponseViewModel>(responseString);
         }
 
         public async Task<Student> UpdateAsync(Student student)
