@@ -13,18 +13,4 @@ namespace code.Api.Application.Dto
         public DateTime EnrollmentDate{ get; init; }
         public List<EnrollmentDto> Enrollments { get; init; }
     }
-
-    public record StudentListDto:ILinkedResource
-    {
-        public int CurrentPage { get; init; }
-
-        public int TotalItems { get; init; }
-
-        public int TotalPages { get; init; }
-
-        public IList<StudentDto> Items { get; init; }
-
-        public IDictionary<LinkedResourceType, Extensions.Pagination.LinkedResource> Links { get; set; }
-
-    }
 }

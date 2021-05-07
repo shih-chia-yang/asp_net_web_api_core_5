@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using code.Api.Application.Dto;
+using code.Api.Application.ViewModels;
 using code.Api.Extensions;
 using code.Api.Extensions.Pagination;
 using code.Infrastructure;
@@ -77,12 +78,12 @@ namespace code.Api.Application.Queries
             return query.Provider.CreateQuery<StudentDto>(methodCallExpression).AsNoTracking();
         }
 
-        public async Task<StudentListDto> PaginationAsync(int limit, int page, CancellationToken cancellationToken,SortingParams param=null)
+        public async Task<PaginationViewModel<StudentDto>> PaginationAsync(int limit, int page, CancellationToken cancellationToken,SortingParams param=null)
         {
             var students =(param == null) ?
             await GetQueryable().PaginationAsync(page, limit, cancellationToken) :
             await Sort(param).AsNoTracking().PaginationAsync(page, limit, cancellationToken);
-            return new StudentListDto()
+            return new PaginationViewModel<StudentDto>()
             {
                 CurrentPage = students.CurrentPage,
                 TotalPages = students.TotalPages,

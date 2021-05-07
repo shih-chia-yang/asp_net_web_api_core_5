@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using code.Api.Extensions;
 using code.Api.Application.Dto;
 using code.Api.Extensions.Pagination;
+using code.Api.Application.ViewModels;
 
 namespace code.Api.Controllers
 {
@@ -76,14 +77,14 @@ namespace code.Api.Controllers
         /// <response code="400">something goes wrong</response>
         [Route("Student",Name=nameof(GetAll))]
         [HttpGet]
-        [ProducesResponseType(typeof(StudentListDto),(int)StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginationViewModel<StudentDto>),(int)StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll(
         [FromQuery] UrlQueryParameters urlQueryParameters,
         [FromQuery]SortingParams sorting)
         {
-            StudentListDto viewmodel;
+            PaginationViewModel<StudentDto> viewmodel;
             if(sorting !=null && !string.IsNullOrEmpty(sorting.SortBy))
                 viewmodel = await _studentQueries.PaginationAsync(urlQueryParameters.Limit,urlQueryParameters.Page,CancellationToken.None,sorting);
             else
@@ -92,7 +93,7 @@ namespace code.Api.Controllers
             return Ok(GeneratePageLinks(urlQueryParameters, viewmodel));
         }
 
-        private StudentListDto GeneratePageLinks(UrlQueryParameters queryParameters,StudentListDto response)
+        private PaginationViewModel<StudentDto> GeneratePageLinks(UrlQueryParameters queryParameters,PaginationViewModel<StudentDto> response)
         {
             if(response.CurrentPage>1)
             {
