@@ -1,24 +1,534 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="jumbotron">
-    <h1>code.University</h1>
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="form-group">
+            <input type="text" placeholder="請輸入學校名稱" style="width:100%">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-primary">查詢</button>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-4">
-        <h2>Welcome to code University</h2>
-        <p>
-            code University is a sample application that demostrates how to use entity framework core in an ASP.NET Core MVC web application.
-        </p>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">訊息公告</p>
+            </div>
+            <div class ="card-body">
+                @{
+                    var notices = new List<string>()
+                        {
+                            "Test1-Title-yyyy/MM/dd",
+                            "Test2-Title-yyyy/MM/dd",
+                            "Test3-Title-yyyy/MM/dd",
+                            "Test4-Title-yyyy/MM/dd",
+                            "Test5-Title-yyyy/MM/dd"
+                        };
+                }
+                @foreach (var item in notices)
+                {
+                    <p class="card-text">@item</p>
+                }
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
-        <h2>Build it from Chia yang Shih</h2>
-        <p>You can build the application by following the steps in a series of tutorials</p>
-        <p><a class="btn btn-default" herf="https://docs.asp.net/en/latest/data/ef-mvc/intro.html">See the tutorial &raquo;</a></p>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">資訊查詢</p>
+            </div>
+            <div class ="card-body">
+                <div class="card-text">
+                    @{
+                        var reports = new List<string>()
+                            {
+                                "學生類",
+                                "教職類",
+                                "校務類",
+                                "研究類",
+                                "財務類"
+                            };
+                    }
+                    <ul class="list-group">
+                        @foreach (var item in reports)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+                <br/>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">詳細</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
-        <h2>Download it</h2>
-        <p>You can download the completed project from GitHub.</p>
-        <p><a class="btn btn-default" href="https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples/5cu-final">See project source code &raquo;</a></p>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">歷史資訊</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                        <p>歷史下載-測試文字測試文字測試文字測試文字測試文字測試文字</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">詳細</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">全校新生註冊率</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <div class="alert alert-danger" role="alert">
+                        連續3年未達60%
+                    </div>
+                    <p>測試大學1</p>
+                    <p>測試大學2</p>
+                    <p>測試大學3</p>
+                    <p>測試大學4</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">詳細</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">教育領域</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <p>教育</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <a asp-action="Broad" class="btn btn-sm btn-outline-secondary">統計一覽</a>
+                        @* <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button> *@
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">藝術與人文</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>藝術</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>人文</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>語文</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class ="row">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">社會科學、新聞學及圖書資訊</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>社會及行為科學</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>新聞學及圖書資訊</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">商業、管理及法律</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>商業及管理</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>法律</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">自然科學、數學及統計一覽</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>生命科學</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>環境</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>物理、化學及地球科學</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>數學及統計一覽</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">資訊通訊科技</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>資訊通訊科技</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">工程、製造及營建</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>工程及工程業</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>製造及加工</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>建築及營建工程</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">農業、林業、漁業及獸醫</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>農業</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>林業</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>漁業</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>獸醫</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">醫藥衛生及社會福利</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>醫藥衛生</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>社會福利</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">服務</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>餐旅及民生服務</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>衛生及職業衛生服務</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>安全服務</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>運輸服務</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">其他</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>其他</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">說明</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">學校清單</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>公立一般大學</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>私立一般大學</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>公立技職校院</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>私立技職校院</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>宗教研修學院</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">地區</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>北</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>中</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>南</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>東</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>離島</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <p class="card-text">學位</p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>僅簡單呈現內容</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>副學士</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>學士</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>碩士</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>博士</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class ="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary" type="button">統計一覽</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

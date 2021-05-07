@@ -10,6 +10,7 @@ using code.Domain.Repositories;
 using code.Infrastructure;
 using code.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,22 @@ namespace code.Api.Registry
             services.AddDbContext<DataContext>(options=>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+            return services;
+        }
+
+        public static IServiceCollection AddApiVersion(this IServiceCollection services)
+        {
+            services.AddApiVersioning(options=>{
+                options.ApiVersionReader=new HeaderApiVersionReader("api-version");
+                options.ReportApiVersions=true;
+                options.AssumeDefaultVersionWhenUnspecified=true;
+                options.DefaultApiVersion= new ApiVersion(1,0);
+                });
+
+            services.AddVersionedApiExplorer(options=>{
+                options.GroupNameFormat="'v'VVV";
+                options.SubstituteApiVersionInUrl=true;
+            });
             return services;
         }
 

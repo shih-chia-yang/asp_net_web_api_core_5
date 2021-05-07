@@ -28,6 +28,26 @@ namespace code.web.Controllers
             return View();
         }
 
+        public IActionResult Broad()
+        {
+            return View();
+        }
+
+        public IActionResult Narrow()
+        {
+            return View();
+        }
+
+        public IActionResult Detailed()
+        {
+            return View();
+        }
+
+        public IActionResult MoreDetailed()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

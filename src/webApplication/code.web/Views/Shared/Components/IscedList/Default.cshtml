@@ -1,0 +1,30 @@
+@using code.web.ViewComponents
+
+@model IEnumerable<IscedViewModel>
+
+@{
+    ViewData["Title"]="IscedList";
+}
+<div class="row row-cols-2 row-cols-md-3 pt-5">
+    @foreach (var item in Model)
+    {
+        <div class="col mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@item.IscedName</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var subItem in item.DetailedList)
+                    {
+                        <p class="card-text">@subItem.IscedName</p>
+                    }
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class ="btn-group">
+                            <a asp-action="Detailed" class="btn btn-sm btn-outline-secondary">統計一覽</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

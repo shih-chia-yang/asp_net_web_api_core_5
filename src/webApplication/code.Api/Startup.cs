@@ -26,11 +26,12 @@ namespace code.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var url = Configuration["StudentUrl"];
-            StartupExtensionMethods.AddCustomMvc(services);
-            StartupExtensionMethods.AddDbContext(services, Configuration);
-            StartupExtensionMethods.SetCorsPolicy(services);
-            StartupExtensionMethods.RegisterService(services);
-            StartupExtensionMethods.SwaggerGenerator(services);
+            services.AddDbContext(Configuration)
+            .AddCustomMvc()
+            .AddApiVersion()
+            .SetCorsPolicy()
+            .RegisterService()
+            .SwaggerGenerator();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

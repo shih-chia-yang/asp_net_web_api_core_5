@@ -13,6 +13,7 @@ using code.Api.Registry;
 
 namespace code.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [EnableCors(StartupExtensionMethods.CorsPolicy)]
     [Produces("application/json")]
     [Route("api/[controller]")]

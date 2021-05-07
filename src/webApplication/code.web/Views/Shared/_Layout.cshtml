@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - code.University</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -38,19 +38,69 @@
             </div>
         </nav>
     </header>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <div class="jumbotron-heading">
+                <img class="img-fluid" alt="Responsive image" src="https://via.placeholder.com/1440x350.png?text=banner">
+            </div>
+        </div>
+    </section>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="text-muted">
         <div class="container">
-            &copy; 2021 - code.web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-md-4">
+                    <ul>
+                        <li>資訊介紹</li>
+                        <li>網站導覽</li>
+                        <li>計畫緣起</li>
+                        <li>聯絡我們</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul text="">
+                        入大學前
+                        <li>大學招生資料資訊網</li>
+                        <li>大學選才與高中育才輔助系統</li>
+                        <li>技專校院招生委員會聯合會</li>
+                        <li>大學多元入學升學網</li>
+                        <li>入學大學考試中心</li>
+                    </ul>
+                    <ul>
+                        入大學後
+                        <li>大專校院一覽表</li>
+                        <li>大學校院課程資源網</li>
+                        <li>技專校院課程資源網</li>
+                        <li>圓夢助學網</li>
+                        <li>大專校院就業職能平臺</li>
+                        <li>教育統計動態視覺化圖表</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        教育部
+                        <li>高教司</li>
+                        <li>技職司</li>
+                        <li>會計處</li>
+                        <li>統計處</li>
+                        <li>中華民國學科標準分類(第5次修正版)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; 2021 - code.web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

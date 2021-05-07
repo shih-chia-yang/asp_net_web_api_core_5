@@ -1,8 +1,3 @@
-using System.Net.Mail;
-using System.Collections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using code.Api.Application.Command;
@@ -18,9 +13,10 @@ using code.Api.Extensions.Pagination;
 
 namespace code.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [EnableCors(StartupExtensionMethods.CorsPolicy)]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/v{ver:apiVersion}/")]
     [ApiController]
     public class StudentsController : ControllerBase
     {
@@ -46,7 +42,8 @@ namespace code.Api.Controllers
         }
 
         /// <summary>
-        ///  取得所有學生資料
+        /// 取得所有學生資料 
+        /// GET api/v1/Student/[?Limit=3&amp;Page=10]
         /// </summary>
         /// <remarks>
         /// sample Result
@@ -77,9 +74,9 @@ namespace code.Api.Controllers
         /// <response code="200">查詢成功</response>
         /// <response code="204">查無此結果</response>
         /// <response code="400">something goes wrong</response>
-        [Route("~/api/Student",Name=nameof(GetAll))]
+        [Route("Student",Name=nameof(GetAll))]
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StudentListDto),(int)StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll(
@@ -140,7 +137,7 @@ namespace code.Api.Controllers
         /// <response code="200">查詢成功</response>
         /// <response code="204">查無此結果</response>
         /// <response code="400">something goes wrong</response>
-        [Route("~/api/Student/{id}")]
+        [Route("Student/{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -151,7 +148,7 @@ namespace code.Api.Controllers
                 return NotFound();
             var result = await _studentQueries.FindAsync(id.Value);
             if(result==null)
-                return NoContent();
+                return NotFound();
             else
                 return Ok(result);
         }
@@ -161,7 +158,7 @@ namespace code.Api.Controllers
         /// </summary>
         /// <param name="addNew">lastname,firstname,enrollmentDate</param>
         /// <returns>if add success will return true</returns>
-        [Route("~/api/Student")]
+        [Route("Student")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -170,24 +167,30 @@ namespace code.Api.Controllers
             if(addNew==null)
                 return BadRequest();
             var result =await _createStudentCommand.Handle(addNew,CancellationToken.None);
-            return CreatedAtAction(nameof(Add), result);
+            return CreatedAtAction(nameof(Add), addNew,result);
         }
 
         /// <summary>
         /// 更新學生資料
         /// </summary>
+        /// <param name="id">學生代碼</param>
         /// <param name="updateItem">lastname,firstname,enrollmentDate</param>
         /// <returns>if update success will return true</returns>
-        [Route("~/api/Student")]
+        [Route("Student/{id}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody]UpdateStudentCommand updateItem)
+        public async Task<IActionResult> Update(int id,[FromBody]UpdateStudentCommand updateItem)
         {
+            if(id!= updateItem.Id)
+            {
+                return BadRequest();
+            }
             if(updateItem ==null)
                 return BadRequest();
+            //驗證不通常，回應badrequest
             var result=await _updateStudentCommand.Handle(updateItem, CancellationToken.None);
-            return Ok(result);
+            return NoContent();
 
         }
 
@@ -196,7 +199,7 @@ namespace code.Api.Controllers
         /// </summary>
         /// <param name="id">欲刪除的學號</param>
         /// <returns>if delete success will return true</returns>
-        [Route("~/api/Student/{id:int}")]
+        [Route("Student/{id:int}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -206,7 +209,7 @@ namespace code.Api.Controllers
                 return BadRequest();
             var deleteItem = new DeleteStudentCommand() { StudentId = id.Value };
             var result=await _deleteStudentCommand.Handle(deleteItem, CancellationToken.None);
-            return Ok(result);
+            return NoContent();
         }
     }
 }
