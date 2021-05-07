@@ -2,6 +2,7 @@ namespace code.web.Infrastructure
 {
     public class API
     {
+        public const string Section = "ServiceUrls";
         public static class Student
         {
             public static string BaseUri(string baseUri) => $"{baseUri}/Student";

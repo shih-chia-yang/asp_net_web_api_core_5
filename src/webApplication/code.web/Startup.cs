@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using code.web.Infrastructure;
 
 namespace code.web
 {
@@ -25,6 +26,8 @@ namespace code.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<List<ServiceUrls>>(options=>
+            Configuration.GetSection(API.Section).Bind(options));
             services.AddControllersWithViews()
             .AddNewtonsoftJson(options=>{
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

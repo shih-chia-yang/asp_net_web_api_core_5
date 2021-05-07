@@ -6,8 +6,8 @@ using code.web.Infrastructure;
 using code.web.Services.Dto;
 using code.web.ViewModels;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace code.web.Services
 {
@@ -17,11 +17,14 @@ namespace code.web.Services
         private readonly HttpClient _apiClient;
 
         private readonly string _studentByPassUrl;
-        
-        public StudentService(HttpClient httpClient)
+
+        private readonly ServiceUrls _serviceUrl;
+
+        public StudentService(HttpClient httpClient,IOptions<List<ServiceUrls>> servicerUrl)
         {
             _apiClient = httpClient;
-            _studentByPassUrl = "https://localhost:5101/api";
+            _serviceUrl = servicerUrl.Value.Where(x=>x.Name==nameof(StudentService)).FirstOrDefault();
+            _studentByPassUrl = $"{_serviceUrl.Url}/api/v{_serviceUrl.Version}";
         }
 
         public async Task<StudentDto> AddAsync(StudentDto student)
